@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import BotSpecs from "./BotSpecs";
 
 const botTypeClasses = {
   Assault: "icon military",
@@ -9,13 +10,19 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot }) {
+function BotCard({ bot, enlistBot }) {
+  const [showSpecs, setShowSpecs] = useState(false);
+
+  const toggleSpecs = () => {
+    setShowSpecs(!showSpecs);
+  };
+
   return (
     <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={() => console.log("add code to connect event listener")}
+        onClick={toggleSpecs}
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
@@ -55,6 +62,16 @@ function BotCard({ bot }) {
               </button>
             </div>
           </span>
+          {showSpecs ? (
+            <BotSpecs bot={bot} />
+          ) : (
+            <button
+            className="ui mini green button"
+            onClick={() => enlistBot(bot)}
+            >
+              Enlist
+            </button>
+          )}
         </div>
       </div>
     </div>
